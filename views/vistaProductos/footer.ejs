@@ -1,0 +1,35 @@
+</div>
+<script>
+    
+    function eliminar(id){
+        fetch(`/api/productos/${id}`,{
+            method: "DELETE"
+        })
+        window.location.reload()
+    }
+
+    function agregarCarrito(){
+        console.log("entro a la funcion");
+        fetch(`http://localhost:8080/api/carrito`,{
+            method: "POST"
+        })
+        window.location.reload()
+    }
+
+    function agregarProdCarrito(id){
+        
+        const obj = {ids:id}
+        //console.log(datos)
+        fetch(`http://localhost:8080/api/carrito/${1}/productos`,{
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(obj)
+            
+        })
+    }
+    
+</script>
+</body>
+</html>

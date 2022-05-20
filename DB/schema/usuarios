@@ -1,0 +1,16 @@
+let {mongoose} = require("../../config/mongoDB")
+
+let {Schema, model} = mongoose;
+
+const usuarioCollection = 'Usuarios'
+
+const usuarioSchema = new mongoose.Schema({
+        email:{type:String},
+        password:{type:String},
+        nombre:{type:String},
+        apellido:{type:String},
+        edad:{type:String},
+        telefono:{type:String}
+})
+
+module.exports = mongoose.model(usuarioCollection, usuarioSchema)

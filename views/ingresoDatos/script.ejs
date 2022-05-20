@@ -1,0 +1,41 @@
+</div>
+<script>
+    var formulario = document.getElementById('formulario');
+
+formulario.addEventListener('submit', function(e){
+    e.preventDefault();
+
+    let datos = new FormData(formulario);
+    let datosobj = transformatAObjeto(datos)
+   enviarDatos(datosobj)
+    console.log(datosobj)
+    alert("producto Agregado")
+    window.location.reload()
+})
+
+    function enviarDatos(datos){
+        //console.log(datos)
+        fetch("http://localhost:8080/api/ingreso",{
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(datos)
+            
+        })
+    }
+
+    function transformatAObjeto(datos){
+        let arrayDatos = { 
+            nombre: datos.get('nombre'),
+            descripcion: datos.get('descripcion'),
+            codigo: datos.get('codigo'),
+            ruta: datos.get('ruta'),
+            precio: datos.get('precio'),
+            stock:  datos.get('stock')
+        }
+        return arrayDatos
+    }
+</script>
+</body>
+</html>

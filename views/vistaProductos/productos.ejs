@@ -1,0 +1,22 @@
+
+<div class="items">
+<% for(producto of array){ %>
+<div class="card" style="width: 18rem;">
+    <img src="<%=producto.url %>" class="card-img-top" alt="...">
+    <div class="card-body">
+      <h5 class="card-title"><%=producto.nombre %></h5>
+      <p class="card-text"><%=producto.descripcion %> </p>
+    </div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">codigo: <%=producto.codigo %></li>
+      <li class="list-group-item">Precio: <%=producto.precio %></li>
+      <li class="list-group-item">Stock: <%=producto.stock %></li>
+    </ul>
+    <div class="card-body">
+      <a href="/api/ingreso/<%=producto.id%> " class="card-link">Editar</a>
+    <button onclick="eliminar('<%=producto.id%>')">Eliminar</button> 
+    <button onclick="agregarProdCarrito('<%=producto.id%>')">Agregar al carrito</button>
+    </div>
+  </div>
+  <%} %>
+</div>
