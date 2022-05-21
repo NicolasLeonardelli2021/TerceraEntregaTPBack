@@ -11,6 +11,8 @@ const baseProductos = require('../src/daos');
 let usuarioSchema= require('../DB/schema/usuarios');
 const passport = require("passport");
 let LocalPassport = require("passport-local").Strategy
+let datos = "";
+const email = require('../utils/email');
 
 const SECRET_KEY_SESION = "desafioFinal";
 const session = require("express-session")
@@ -116,9 +118,11 @@ module.exports = app =>{
        /*  if(CarritoDao.() != 0){
             existCarri = true;tamanioArrayCarrito
         } */
-
+        const usuario = req.user[0];
+        const nombre = req.user[0].nombre;
         const array = baseProductos.listarAll();
-        res.render("card", {array});
+        console.log(usuario);
+        res.render("card", {array,usuario});
         console.log(array)
         
     })
@@ -225,10 +229,48 @@ module.exports = app =>{
    })
 
   
-   app.post("/api/registro", passport.authenticate("register", {successRedirect: "productos", failureRedirect: "error"}))
+   app.post("/api/registro",async(req,res,next)=>{
+    let { username } = req.body;
+        try{    
+            let user = await usuarioSchema.find({email:username});
+            if(user==""){
+                datos = (req.body);
+                
+                res.render("imagenUsuario",{});
+            }else{
+                res.send("Usuario ya registrado");
+            }
+        }catch(error){  
+            res.render("error",{});
+        }
+   })
 
-   app.get('/api/login', isNoAuth,(req,res,next)=>{
-    res.render('login',{});
+
+
+app.get("/api/upload",(req,res,next)=>{
+   
+    res.render("imagenUsuario",{});
+})
+
+app.post("/api/upload", async(req,res)=>{
+    try{
+        console.log(req.file)
+        const image = req.file.filename
+        const rutaImage = '/uploads/' + image
+        let num = datos.area+datos.telefono
+        const usuario = new Usuario(datos.nombre,datos.apellido,datos.edad,datos.username,datos.password,num,rutaImage);
+
+         console.log(usuario);
+         const usuarioSave = new usuarioSchema(usuario);
+        await usuarioSave.save(); 
+
+        email(usuario); 
+        res.render('userRegistrado',{});
+    }catch(error){
+        console.log(error)
+    }
+  
+    
 })
 
 /* app.post('/api/login', (req,res,next)=>{
@@ -238,6 +280,10 @@ module.exports = app =>{
 }) */
 
 app.post("/api/login", passport.authenticate("login",{successRedirect:"productos", failureRedirect: "error"}));
+
+app.get('/api/login', isNoAuth,(req,res,next)=>{
+    res.render('login',{});
+})
 
 const getName = req =>req.session.name;
 

@@ -5,12 +5,14 @@ let {Schema, model} = mongoose;
 const usuarioCollection = 'Usuarios'
 
 const usuarioSchema = new mongoose.Schema({
+        rol:{type:String},
         email:{type:String},
         password:{type:String},
         nombre:{type:String},
         apellido:{type:String},
         edad:{type:String},
-        telefono:{type:String}
+        telefono:{type:String},
+        imagen:{type:String}
 })
 
 module.exports = mongoose.model(usuarioCollection, usuarioSchema)

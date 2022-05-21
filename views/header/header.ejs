@@ -13,12 +13,12 @@
     <div >
         <div class="container" style="background-color: rgb(163, 226, 118); color: white; max-width: 100%;">
             <div class="row">
-                <div>
-                 
-                </div>
+                
             
             <div class="col-4">
-
+                <div>
+                    <img src="/logoIC.png" alt="Logo">
+                </div>
             </div>
             <div class="col-4">
                 <form action="" method="post">
@@ -36,14 +36,26 @@
         <div class="row">
 
             
-            <div class="col-8">
-                <div style="background-color: rgb(163, 226, 118);">
-                    <a href="./ingreso" class="btn btn-primary"> Ingresar productos</a>
-
-                    <a href="./productos"> Ver Productos</a>
-
-                   
-            </div>
+            <div class="col-8" style="display:inline-flex;">
+                <div style="margin-left:10px ;">
+                    <a href="">audio y Video</a>
+                </div>
+                <div style="margin-left:10px ;">
+                    <a href="">Gaming</a>
+                </div>
+                <div style="margin-left:10px ;">
+                    <a href="">Celular y tablet</a>
+                </div>
+                <div style="margin-left:10px ;">
+                    <a href="">Computacion</a>
+                </div>
+                <div style="margin-left:10px ;">
+                    <a href="">Hogar y Oficina</a>
+                </div>
+                <div style="margin-left:10px ;">
+                    <a href="">Herramientas</a>
+                </div>
+                
             </div>
             <div class="col-3" style="display:inline-flex; color: black">
                 <div>
@@ -51,8 +63,16 @@
 
                 </div>
                 <div style="margin-left:10px ;">
-                    <a href="./login">Ingresá</a>
+                    <p> Bienvenido <%- usuario.nombre %></p>
                 </div>
+                <div style="margin-left:10px ;">
+                    <img src="<%= usuario.imagen %>" alt="" style="height: 30px; width: 30px;">
+                </div>
+                <% if(usuario.rol == "administrador") {%> 
+                <div>
+                    <a href="./ingreso"> Ingresar productos</a>             
+                </div>
+                <% } %> 
                 <div style="margin-left:10px ;">
                     <a href="./olvidar">salir</a>
                 </div>
@@ -60,7 +80,7 @@
             </div>
             <div class="col-1">
                 
-                    <a href="./carrito/1/productos">carrito</a>
+                    <a href="./carrito/1/productos"><img src="/carritoTransp.png" alt="carrito" style="height: 30px; width: 30px;"></a>
                   
             </div>
             
