@@ -12,7 +12,7 @@ let usuarioSchema= require('../DB/schema/usuarios');
 const passport = require("passport");
 let LocalPassport = require("passport-local").Strategy
 let datos = "";
-const email = require('../utils/email');
+const email = require('../resources/email');
 
 const SECRET_KEY_SESION = "desafioFinal";
 const session = require("express-session")
@@ -119,7 +119,18 @@ module.exports = app =>{
             existCarri = true;tamanioArrayCarrito
         } */
         const usuario = req.user[0];
-        const nombre = req.user[0].nombre;
+        
+
+        let nombre = usuario.nombre;
+        let imagen = usuario.imagen;
+        console.log("objeto usuario",usuario.nombre,usuario.imagen)
+        console.log(usuario);
+         req.session.user = {
+            nombre,
+            imagen,
+        } 
+
+
         const array = baseProductos.listarAll();
         console.log(usuario);
         res.render("card", {array,usuario});
@@ -240,7 +251,7 @@ module.exports = app =>{
             }else{
                 res.send("Usuario ya registrado");
             }
-        }catch(error){  
+        }catch(error){  6
             res.render("error",{});
         }
    })
@@ -260,7 +271,6 @@ app.post("/api/upload", async(req,res)=>{
         let num = datos.area+datos.telefono
         const usuario = new Usuario(datos.nombre,datos.apellido,datos.edad,datos.username,datos.password,num,rutaImage);
 
-         console.log(usuario);
          const usuarioSave = new usuarioSchema(usuario);
         await usuarioSave.save(); 
 

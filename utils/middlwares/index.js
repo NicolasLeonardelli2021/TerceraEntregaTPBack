@@ -5,7 +5,7 @@ let usuarioSchema= require('../../DB/schema/usuarios');
 const SECRET_KEY_SESION = "desafioFinal";
 const Usuario = require('../../objetos/usuario');
 const MongoStore = require('connect-mongo');
-const email = require('../email');
+const email = require('../../resources/email');
 const path = require('path');
 const multer = require('multer');
 const uuid = require('uuid');
@@ -19,6 +19,10 @@ passport.use("login", new LocalPassport(async(username,password,done)=>{
     if(user=="") return done(null,false);
     if(user[0].password != password) return done(null,false);
 
+  /*   req.session.user = {
+        username,
+        password,
+    } */
     return done(null,user[0]);
 
 }));
